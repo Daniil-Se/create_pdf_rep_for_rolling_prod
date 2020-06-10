@@ -10,6 +10,9 @@ import jinja2
 from datetime import datetime
 
 
+import numpy as np
+
+
 conn = psycopg2.connect(database="roll_grinders",
                         user='postgres',
                         password='2378951',
@@ -64,37 +67,61 @@ def get_report_hercules(file_name, machine_num): # в качестве агру�
 				shape_ref = row[20]
 				shape_after_grinding = row[21]
 				deviation_after_grinding = row[22]
-				bruise = row[23]
-				crack =  row[24]
-				magnetism = row[25]
-				operator = row[26]
+				BruiseBeforeGrinding = row[23]
+				BruiseAfterGrinding =  row[24]
+				CrackBeforeGrinding = row[25]
+				CrackAfterGrinding = row[26]
+				MagnetismBeforeGrinding = row[27]
+				MagnetismAfterGrinding = row[28]
+				CrackTreshold = row[29]
+				BruiseTreshold = row[30]
+				Operator = row[31]
 
 				shape_ref_val = [float(i) for i in shape_ref.split(',')]
 				shape_after_grinding_val = [float(i) for i in shape_after_grinding.split(',')]
 				deviation_after_grinding_val = [float(i) for i in deviation_after_grinding.split(',')]
 
-				y_val = [5.75*i for i in range(0, 401)]	# значения для графиков по оси y
-				fig_profile, ax_profile = plt.subplots() # s образный график (профиль)
+				"""вихретоковая дефектоскопия"""
+				BruiseAfterGrinding = np.array([float(i) for i in BruiseAfterGrinding.split(',')]) 
+				BruiseAfterGrinding.resize((401, 360))
+				y_BruiseAfterGrinding = np.amax(BruiseAfterGrinding, axis = 1)
 
+				CrackAfterGrinding = np.array([float(i) for i in CrackAfterGrinding.split(',')]) 
+				CrackAfterGrinding.resize((401, 360))
+				y_CrackAfterGrinding = np.amax(CrackAfterGrinding, axis = 1)
+
+				CrackBeforeGrinding = np.array([float(i) for i in CrackBeforeGrinding.split(',')]) 
+				CrackBeforeGrinding.resize((401, 360))
+				y_CrackBeforeGrinding = np.amax(CrackBeforeGrinding, axis = 1)
+
+				MagnetismAfterGrinding = np.array([float(i) for i in MagnetismAfterGrinding.split(',')]) 
+				MagnetismAfterGrinding.resize((401, 360))
+				y_MagnetismAfterGrinding = np.amax(MagnetismAfterGrinding, axis = 1)
+				MagnetismAfterGrinding_val = y_MagnetismAfterGrinding.tolist()[::10]
+
+				step_val = [5.75*i for i in range(0, 401)]	# значения для всех графиков по оси y для профиля и отклонения и x для вихретоковой дефектоскопии
+
+				
 				"""построение графика по профилю"""
-				ax_profile.plot(shape_ref_val, y_val, color='black', label='Заданная форма', linewidth = 0.5)
-				ax_profile.plot([i+0.01 for i in shape_ref_val], y_val, color='red', label='Верхняя граница', linestyle='--', linewidth = 0.5)
-				ax_profile.plot([i-0.01 for i in shape_ref_val], y_val, color='red', label='Нижняя граница', linestyle='--', linewidth = 0.5)
-				ax_profile.plot(shape_after_grinding_val, y_val, color='blue', label='Фактическая кривая', linewidth = 0.5)
-				ax_profile.margins(0) # убрать отступы
-				fig_profile.set_figwidth(6) # задать ширину фигуры
-				fig_profile.set_figheight(6) # задать высоту фигуры
-				fig_profile.gca().invert_yaxis() # инвертировал ось y
-				ax_profile.xaxis.tick_top() # расположить ось x сверху
-				ax_profile.set_xlabel("мм") # подпись оси x
-				ax_profile.xaxis.set_label_position('top') # расположение надписи по оси x
-				ax_profile.set_ylabel("мм") # подпись оси у
-				ax_profile.set_xlim(-0.01, 0.5)	# ограничить ось по значениям
+				fig_profile, ax_profile = plt.subplots()  # s образный график (профиль)
+				ax_profile.plot(shape_ref_val, step_val, color='black', label='Заданная форма', linewidth = 0.5)
+				ax_profile.plot([i+0.01 for i in shape_ref_val], step_val, color='red', label='Верхняя граница', linestyle='--', linewidth = 0.5)
+				ax_profile.plot([i-0.01 for i in shape_ref_val], step_val, color='red', label='Нижняя граница', linestyle='--', linewidth = 0.5)
+				ax_profile.plot(shape_after_grinding_val, step_val, color='blue', label='Фактическая кривая', linewidth = 0.5)
+				ax_profile.margins(0)  # убрать отступы
+				fig_profile.set_figwidth(6)  # задать ширину фигуры
+				fig_profile.set_figheight(6)  # задать высоту фигуры
+				fig_profile.gca().invert_yaxis()  # инвертировал ось y
+				ax_profile.xaxis.tick_top()  # расположить ось x сверху
+				ax_profile.set_xlabel("мм")  # подпись оси x
+				ax_profile.xaxis.set_label_position('top')  # расположение надписи по оси x
+				ax_profile.set_ylabel("мм")  # подпись оси у
+				ax_profile.set_xlim(-0.01, 0.5)	 # ограничить ось по значениям
 				plt.xticks(rotation=270) 
-				ax_profile.xaxis.set_major_locator(ticker.MultipleLocator(0.05)) # дробление сетки для оси x
-				ax_profile.yaxis.set_major_locator(ticker.MultipleLocator(100)) # дробление сетки для оси y
+				ax_profile.xaxis.set_major_locator(ticker.MultipleLocator(0.05))  # дробление сетки для оси x
+				ax_profile.yaxis.set_major_locator(ticker.MultipleLocator(100))  # дробление сетки для оси y
 				ax_profile.grid(which='major', color = 'k', linestyle='--')
-				plt.legend() #bbox_to_anchor=(0.5, -0.1), loc='lower left') #, ncol=2, mode="expand", borderaxespad=0.)
+				plt.legend()  # bbox_to_anchor=(0.5, -0.1), loc='lower left')  #, ncol=2, mode="expand", borderaxespad=0.)
 
 				"""сохранение изображения во временную память"""
 				pic_IObytes = BytesIO()
@@ -104,7 +131,7 @@ def get_report_hercules(file_name, machine_num): # в качестве агру�
 
 				"""построение графика по смещениям"""
 				fig_shift, ax_shift = plt.subplots()
-				ax_shift.plot(deviation_after_grinding_val, y_val, color='blue', label='Отклонение')
+				ax_shift.plot(deviation_after_grinding_val, step_val, color='blue', label='Отклонение')
 				ax_shift.plot(0.01, color='red')
 				ax_shift.plot(-0.01, color='red')
 
@@ -128,7 +155,7 @@ def get_report_hercules(file_name, machine_num): # в качестве агру�
 				ax_shift.xaxis.set_label_position('top') # расположение надписи по оси x
 				ax_shift.set_ylabel("мм") # подпись оси у
 				ax_shift.set_xlim(-0.02, 0.02)	# ограничить ось по значениям
-				plt.xticks(rotation=270)
+				plt.xticks(rotation=270)  # поворот надписей оси x
 				ax_shift.margins(0) # убрать отступы
 				ax_shift.xaxis.set_major_locator(ticker.MultipleLocator(0.004))
 				ax_shift.yaxis.set_major_locator(ticker.MultipleLocator(100))
@@ -141,7 +168,37 @@ def get_report_hercules(file_name, machine_num): # в качестве агру�
 				pic_IObytes.seek(0)
 				shift_plot_image = b64encode(pic_IObytes.read()).decode('utf-8') # преобразование к base64 и декод в ютф-8
 
-				# plt.show() # показать графики
+
+				
+				#рисуем график
+				"""построение графика по вихретоковой дефектоскопии после шлифования"""
+				fig, ax = plt.subplots() 
+
+				fig.set_figwidth(6) # задать ширину фигуры
+				fig.set_figheight(7) # задать высоту фигуры
+				ax.barh(step_val, y_BruiseAfterGrinding, height=7, color='yellow', label='Изменение структуры')
+				ax.barh(step_val, y_CrackAfterGrinding, height=7, color='red', label='Риска')
+				ax.barh(step_val, y_MagnetismAfterGrinding, height=7, color='blue', label='Магнетизм')
+				ax.xaxis.tick_top()  # расположить ось x сверху
+				ax.margins(0)  # убрать отступы
+				fig.gca().invert_yaxis() # инвертировал ось y
+				ax.set_xlim(0, 5000)  # ограничение оси x
+				plt.xticks(rotation=270)  # поворот надписей оси x
+				ax.set_xlabel("???")  # подпись оси x
+				ax.xaxis.set_label_position('top')  # расположение надписи по оси x
+				ax.xaxis.set_major_locator(ticker.MultipleLocator(200))
+				ax.yaxis.set_major_locator(ticker.MultipleLocator(100))
+				ax.grid(which='major', color = 'k', linestyle='--')
+				plt.legend(loc='lower right')
+
+				"""сохранение изображения во временную память"""
+				pic_IObytes = BytesIO()
+				plt.savefig(pic_IObytes,  format='png')
+				pic_IObytes.seek(0)
+				eddy_current_ag_plot_image = b64encode(pic_IObytes.read()).decode('utf-8') # преобразование к base64 и декод в ютф-8
+
+				# plt.show()  # показать графики
+
 
 				TEMPLATE_FILE = "report_templates/hercules_template.html"
 				template = templateEnv.get_template(TEMPLATE_FILE)
@@ -161,11 +218,14 @@ def get_report_hercules(file_name, machine_num): # в качестве агру�
 					meas_off_set_tail_stock=meas_off_set_tail_stock,
 					meas_off_set_head_stock=meas_off_set_head_stock,
 					form_tolerance=form_tolerance,
-					operator=operator,
+					operator=Operator,
 					target_diameter=target_diameter,
 					shape_ref_val=['%.3f'%val for val in shape_ref_val[::10]],
 					shape_after_grinding_val=['%.3f'%val for val in shape_after_grinding_val[::10]],
 					deviation_after_grinding_val=['%.3f'%val for val in deviation_after_grinding_val[::10]],
+					BruiseAfterGrinding_val=[val for val in y_BruiseAfterGrinding[::10]],
+					CrackAfterGrinding_val=[val for val in y_CrackAfterGrinding[::10]],
+					MagnetismAfterGrinding_val=[val for val in y_MagnetismAfterGrinding[::10]],
 					roll_diameter_before_grinding_head_stock=roll_diameter_before_grinding_head_stock, # перед бабк перед
 					roll_diameter_after_grinding_head_stock=roll_diameter_after_grinding_head_stock, # перед бабк после
 					roll_diameter_before_grinding_middle=roll_diameter_before_grinding_middle,
@@ -173,7 +233,8 @@ def get_report_hercules(file_name, machine_num): # в качестве агру�
 					roll_diameter_before_grinding_tail_stock=roll_diameter_before_grinding_tail_stock,
 					roll_diameter_after_grinding_tail_stock=roll_diameter_after_grinding_tail_stock,
 					profile_plot_image=profile_plot_image,
-					shift_plot_image=shift_plot_image)
+					shift_plot_image=shift_plot_image,
+					eddy_current_ag_plot_image=eddy_current_ag_plot_image)
 
 				outputFilename = f"pdf_reports/hercules/hercules_{name}.pdf"
 
@@ -201,10 +262,10 @@ def get_report_pomini():
 	convertHtmlToPdf(outputText, outputFilename)
 
 
+
+get_report_hercules("466_07_05_2020_12_16_43", machine_num=6) 
+
 # get_report_pomini()
-get_report_hercules("466_07_05_2020_12_16_43", machine_num=6)
-
-
 
 
 

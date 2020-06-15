@@ -1,0 +1,112 @@
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<style type="text/css">
+		@page { size: A4; margin: 1cm; }
+		@font-face { font-family: Arial; src: url("{{font_arial_dir}}"); }
+		/*table { border: 1px solid black; width: 100%; }*/
+		p { color: black; font-family: Arial; font-size: 14px; line-height: 100%; margin: 0;}
+		h1 { color: black; font-family: Arial; font-size: 32px; font-weight: 900}
+		td { vertical-align:top;}
+		.top-tr { height: 40px }
+		.width-70 { width: 70% }
+		.width-30 { width: 30% }
+		.width-50 { width: 50% }
+	</style>
+</head>
+
+<body>
+	<div class="1st_page">
+		<table>
+			<tbody>
+				<tr class="top-tr">
+					<td class="width-30" style="vertical-align: bottom;">
+						<p style="text-align: left;">Pomini</p>
+					</td>
+					<td class="width-70">
+						<h1 style="text-decoration: underline; text-align: left;">Измерение профиля : {{roll_nb}}</h1>
+					</td>
+				</tr>
+				<tr style="height: 30px">
+					<td class="width-30"></td>
+					<td class="width-70"></td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<tbody>
+				<tr>
+					<td class="width-50"><p>Дата/время начала:{{start_date_time}}</p></td>
+					<td class="width-50"><p>Номер станка: 1</p></td>
+				</tr>
+				<tr>
+					<td><p>Номер валка:{{roll_nb}}</p></td>
+					<td><p>Имя станка:{{machine_name}}</p></td>
+				</tr>
+				<tr>
+					<td><p>Код оператора:{{operator_code}}</p></td>
+					<td><p>Заводской номер станка {{machine_serial_number}}</p></td>
+				</tr>
+				<tr style="height: 10px">
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td><p>Дата/время измерения: {{measurement_date}}</p></td>
+					<td><p>Показатель измерений: 1</p></td>
+				</tr>
+				<tr style="height: 10px">
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td><p>Код профиля:{{profile_code}}</p></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><p>Длина корпуса валка: (mm) {{roll_lenght}}</p></td>
+					<td><p>Допуск для профиля{{profile_tolerance}}</p></td>
+				</tr>
+				<tr>
+					<td><p>Измеренная длина: (mm)</p></td>
+					<td><p>Допуск на конусность: (mm) {{taper_tolerance}}</p></td>
+				</tr>
+				<tr style="height: 10px">
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td><p>Диаметр передней бабки: (mm) {{diam_before_head}}</p></td>
+					<td><p>Макс. ошибка (mm)</p></td>
+				</tr>
+				<tr>
+					<td><p>Диаметр в центре: (mm) {{diam_before_mid}}</p></td>
+					<td><p>Мин. значение (mm) {{min_first_rp_first_map}}</p></td>
+				</tr>
+				<tr>
+					<td><p>Диаметр на задней бабке: (mm) {{diam_before_tail}}</p></td>
+					<td><p>Макс. значение (mm) {{max_first_rp_first_map}}</p></td>
+				</tr>
+				<tr>
+					<td><p>Первая/последняя конусность: (mm)</p></td>
+					<td><p>Текущая высота профиля (mm)</p></td>
+				</tr>
+				<tr>
+					<td><p>Наименьшие квадраты конусности: (mm)</p></td>
+					<td><p>Расчетная высота профиля (mm)</p></td>
+				</tr>
+				<tr>
+					<td><p>Точки в допуске: </p></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<tbody>
+				<tr>
+					<td><img style="width: 800px; height: 400px" src="data:image/png;base64,{{ first_plot_image }}"></td>
+				</tr>
+				<tr>
+					<td><img style="width: 800px; height: 400px" src="data:image/png;base64,{{ second_plot_image }}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<pdf:nextpage> {#----------------- переход на следующую страницу ----------------#}
+</body>

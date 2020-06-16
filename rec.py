@@ -357,7 +357,7 @@ def get_report_pomini():
 
 	measurement_date = cur_fetchall[0][1]
 
-	print(measurement_date)
+	# print(measurement_date)
 	fig_profile, ax_profile = plt.subplots()
 	fig_profile.set_figwidth(11) # задать ширину фигуры
 	fig_profile.set_figheight(6) # задать высоту фигуры
@@ -451,6 +451,8 @@ def get_report_pomini():
 		diam_before_head=diam_before_head,
 		diam_before_mid=diam_before_mid,
 		diam_before_tail=diam_before_tail,
+		first_rp_first_map=first_rp_first_map,
+		first_rp_first_map_num_val=[str(i)+'.)' for i in range(len(first_rp_first_map))],
 		first_plot_image=first_plot_image,
 		second_plot_image=second_plot_image)
 

@@ -11,6 +11,7 @@
 		.width-70 { width: 70% }
 		.width-30 { width: 30% }
 		.width-50 { width: 50% }
+		.values-span { text-decoration: underline; }
 	</style>
 </head>
 
@@ -35,61 +36,61 @@
 		<table>
 			<tbody>
 				<tr>
-					<td class="width-50"><p>Дата/время начала:{{start_date_time}}</p></td>
-					<td class="width-50"><p>Номер станка: 1</p></td>
+					<td class="width-50"><p>Дата/время начала: <span class="values-span">{{start_date_time}}</span></p></td>
+					<td class="width-50"><p>Номер станка: <span class="values-span">1</span></p></td>
 				</tr>
 				<tr>
-					<td><p>Номер валка:{{roll_nb}}</p></td>
-					<td><p>Имя станка:{{machine_name}}</p></td>
+					<td><p>Номер валка: <span class="values-span">{{roll_nb}}</span></p></td>
+					<td><p>Имя станка: <span class="values-span">{{machine_name}}</span></p></td>
 				</tr>
 				<tr>
-					<td><p>Код оператора:{{operator_code}}</p></td>
-					<td><p>Заводской номер станка {{machine_serial_number}}</p></td>
+					<td><p>Код оператора: <span class="values-span">{{operator_code}}</span></p></td>
+					<td><p>Заводской номер станка <span class="values-span">{{machine_serial_number}}</span></p></td>
 				</tr>
 				<tr style="height: 10px">
 					<td></td><td></td>
 				</tr>
 				<tr>
-					<td><p>Дата/время измерения: {{measurement_date}}</p></td>
-					<td><p>Показатель измерений: 1</p></td>
+					<td><p>Дата/время измерения: <span class="values-span">{{measurement_date}}</span></p></td>
+					<td><p>Показатель измерений: <span class="values-span">1</span></p></td>
 				</tr>
 				<tr style="height: 10px">
 					<td></td><td></td>
 				</tr>
 				<tr>
-					<td><p>Код профиля:{{profile_code}}</p></td>
+					<td><p>Код профиля: <span class="values-span">{{profile_code}}</span></p></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><p>Длина корпуса валка: (mm) {{roll_lenght}}</p></td>
-					<td><p>Допуск для профиля{{profile_tolerance}}</p></td>
+					<td><p>Длина корпуса валка: (mm) <span class="values-span">{{roll_lenght}}</span></p></td>
+					<td><p>Допуск для профиля: <span class="values-span">{{profile_tolerance}}</span></p></td>
 				</tr>
 				<tr>
 					<td><p>Измеренная длина: (mm)</p></td>
-					<td><p>Допуск на конусность: (mm) {{taper_tolerance}}</p></td>
+					<td><p>Допуск на конусность: (mm) <span class="values-span">{{taper_tolerance}}</span></p></td>
 				</tr>
 				<tr style="height: 10px">
 					<td></td><td></td>
 				</tr>
 				<tr>
-					<td><p>Диаметр передней бабки: (mm) {{diam_before_head}}</p></td>
-					<td><p>Макс. ошибка (mm)</p></td>
+					<td><p>Диаметр передней бабки: (mm) <span class="values-span">{{diam_before_head}}</span></p></td>
+					<td><p>Макс. ошибка: (mm)</p></td>
 				</tr>
 				<tr>
-					<td><p>Диаметр в центре: (mm) {{diam_before_mid}}</p></td>
-					<td><p>Мин. значение (mm) {{min_first_rp_first_map}}</p></td>
+					<td><p>Диаметр в центре: (mm) <span class="values-span">{{diam_before_mid}}</span></p></td>
+					<td><p>Мин. значение: (mm) <span class="values-span">{{min_first_rp_first_map}}</span></p></td>
 				</tr>
 				<tr>
-					<td><p>Диаметр на задней бабке: (mm) {{diam_before_tail}}</p></td>
-					<td><p>Макс. значение (mm) {{max_first_rp_first_map}}</p></td>
+					<td><p>Диаметр на задней бабке: (mm) <span class="values-span">{{diam_before_tail}}</span></p></td>
+					<td><p>Макс. значение: (mm) <span class="values-span">{{max_first_rp_first_map}}</span></p></td>
 				</tr>
 				<tr>
 					<td><p>Первая/последняя конусность: (mm)</p></td>
-					<td><p>Текущая высота профиля (mm)</p></td>
+					<td><p>Текущая высота профиля: (mm)</p></td>
 				</tr>
 				<tr>
 					<td><p>Наименьшие квадраты конусности: (mm)</p></td>
-					<td><p>Расчетная высота профиля (mm)</p></td>
+					<td><p>Расчетная высота профиля: (mm)</p></td>
 				</tr>
 				<tr>
 					<td><p>Точки в допуске: </p></td>
@@ -109,4 +110,163 @@
 		</table>
 	</div>
 	<pdf:nextpage> {#----------------- переход на следующую страницу ----------------#}
+	<div class="2st_page">
+		<table>
+			<tbody>
+				<tr class="top-tr">
+					<td class="width-30" style="vertical-align: bottom;">
+						<p style="text-align: left;">Pomini</p>
+					</td>
+					<td class="width-70">
+						<h1 style="text-decoration: underline; text-align: left;">Измерение профиля : <span class="values-span">{{roll_nb}}</span></h1>
+					</td>
+				</tr>
+				<tr style="height: 30px">
+					<td class="width-30"></td>
+					<td class="width-70"></td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<tbody>
+				<tr>
+					<td class="width-50"><p>Дата/время начала: <span class="values-span">{{start_date_time}}</span></p></td>
+					<td class="width-50"><p>Номер станка: <span class="values-span">1</span></p></td>
+				</tr>
+				<tr>
+					<td><p>Номер валка: <span class="values-span">{{roll_nb}}</span></p></td>
+					<td><p>Имя станка: <span class="values-span">{{machine_name}}</span></p></td>
+				</tr>
+				<tr>
+					<td><p>Код оператора: <span class="values-span">{{operator_code}}</span></p></td>
+					<td><p>Заводской номер станка: <span class="values-span">{{machine_serial_number}}</span></p></td>
+				</tr>
+				<tr style="height: 10px">
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td><p>Дата/время измерения: <span class="values-span">{{measurement_date}}</span></p></td>
+					<td><p>Показатель измерений: <span class="values-span">1</span></p></td>
+				</tr>
+				<tr style="height: 10px">
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td><p>Код профиля: <span class="values-span">{{profile_code}}</span></p></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><p>Длина корпуса валка: (mm) <span class="values-span">{{roll_lenght}}</span></p></td>
+					<td><p>Допуск для профиля: <span class="values-span">{{profile_tolerance}}</span></p></td>
+				</tr>
+				<tr>
+					<td><p>Измеренная длина: (mm)</p></td>
+					<td><p>Допуск на конусность: (mm) <span class="values-span">{{taper_tolerance}}</span></p></td>
+				</tr>
+				<tr style="height: 10px">
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td><p>Диаметр передней бабки: (mm) <span class="values-span">{{diam_before_head}}</span></p></td>
+					<td><p>Макс. ошибка (mm)</p></td>
+				</tr>
+				<tr>
+					<td><p>Диаметр в центре: (mm) <span class="values-span">{{diam_before_mid}}</span></p></td>
+					<td><p>Мин. значение: (mm) <span class="values-span">{{min_first_rp_first_map}}</span></p></td>
+				</tr>
+				<tr>
+					<td><p>Диаметр на задней бабке: (mm) <span class="values-span">{{diam_before_tail}}</span></p></td>
+					<td><p>Макс. значение: (mm) <span class="values-span">{{max_first_rp_first_map}}</span></p></td>
+				</tr>
+				<tr>
+					<td><p>Первая/последняя конусность: (mm)</p></td>
+					<td><p>Текущая высота профиля: (mm)</p></td>
+				</tr>
+				<tr>
+					<td><p>Наименьшие квадраты конусности: (mm)</p></td>
+					<td><p>Расчетная высота профиля: (mm)</p></td>
+				</tr>
+				<tr style="height: 30px">
+					<td></td>
+					<td></td>
+				</tr>
+				<tr style="height: 50px">
+					<td><p>Точки действительного профиля (начиная от передней бабки): </p></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<tbody>
+				<tr>
+					<td style="width: 4%">
+						{% for i in first_rp_first_map_num_val[:15]%}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+					<td style="width: 12%">
+						{% for i in first_rp_first_map[:15] %}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+
+					<td style="width: 4%">
+						{% for i in first_rp_first_map_num_val[15:30]%}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+					<td style="width: 12%">
+						{% for i in first_rp_first_map[15:30] %}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+
+					<td style="width: 4%">
+						{% for i in first_rp_first_map_num_val[30:45]%}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+					<td style="width: 12%">
+						{% for i in first_rp_first_map[30:45] %}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+
+					<td style="width: 4%">
+						{% for i in first_rp_first_map_num_val[45:60]%}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+					<td style="width: 12%">
+						{% for i in first_rp_first_map[45:60] %}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+
+					<td style="width: 4%">
+						{% for i in first_rp_first_map_num_val[60:75]%}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+					<td style="width: 12%">
+						{% for i in first_rp_first_map[60:75] %}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+
+					<td style="width: 4%">
+						{% for i in first_rp_first_map_num_val[75:]%}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+					<td style="width: 12%">
+						{% for i in first_rp_first_map[75:] %}
+						<p>{{i}}</p>
+						{% endfor %}
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
 </body>
